@@ -2,8 +2,7 @@ package com.android.ylblib.views;
 
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.ylblib.R;
+import com.android.ylblib.tools.StatusBarCompat;
 
 
 /**
@@ -20,11 +20,11 @@ import com.android.ylblib.R;
 public class AppBar extends LinearLayout {
 
     private static final String TAG = "AppBar";
-    private LinearLayout mLeftRoot , mMiddleRoot , mRightRoot ;
-    private Toolbar toolbar;
-    private ImageView mBackImage ;
-    private ImageView mRightImage;
-    private TextView mTitleView ;
+    private LinearLayout mLeftRoot , mMiddleRoot , mRightRoot , appBar , titleBar ;
+    private ImageView mLeftImage ,mRightImage ;
+    private TextView mTitleView  , mLeftText , mRightText , mStatusBar;
+
+
 
     public AppBar(Context context) {
         super(context);
@@ -45,10 +45,23 @@ public class AppBar extends LinearLayout {
         mLeftRoot = (LinearLayout)view.findViewById(R.id.left_root);
         mMiddleRoot = (LinearLayout)view.findViewById(R.id.middle_root);
         mRightRoot = (LinearLayout)view.findViewById(R.id.right_root);
-        toolbar = (Toolbar)view.findViewById(R.id.toolbar);
-        mBackImage = (ImageView)view.findViewById(R.id.image_back);
+        appBar = (LinearLayout) view.findViewById(R.id.appbar);
+
+        titleBar = (LinearLayout)view.findViewById(R.id.titlebar);
+
+        mStatusBar = (TextView)view.findViewById(R.id.statusbar);
+
+        mLeftImage = (ImageView)view.findViewById(R.id.image_left);
         mRightImage = (ImageView)view.findViewById(R.id.image_right);
+
         mTitleView = (TextView)view.findViewById(R.id.title);
+        mLeftText = (TextView)view.findViewById(R.id.text_left);
+        mRightText = (TextView)view.findViewById(R.id.text_right);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)mStatusBar.getLayoutParams();
+        params.height = StatusBarCompat.getStatusBarHeight(context);
+        mStatusBar.setLayoutParams(params);
+
     }
 
 
@@ -81,8 +94,8 @@ public class AppBar extends LinearLayout {
      * set image back
      * @param drableResource
      */
-    public void setBackImage(int drableResource){
-        mBackImage.setImageResource(drableResource);
+    public void setLeftImage(int drableResource){
+        mLeftImage.setImageResource(drableResource);
     }
 
 
@@ -94,6 +107,41 @@ public class AppBar extends LinearLayout {
     public void setRightImage(int drableResource){
         mRightImage.setImageResource(drableResource);
     }
+
+
+    /**
+     * set left text by id
+     * @param textId
+     */
+    public void setLeftText(int textId){
+        mLeftText.setText(textId);
+    }
+
+    /**
+     * set left text by string
+     * @param text
+     */
+    public void setLeftText(String text){
+        mLeftText.setText(text);
+    }
+
+
+    /**
+     * set Right text by id
+     * @param textId
+     */
+    public void setRightText(int textId){
+        mRightText.setText(textId);
+    }
+
+    /**
+     * set Right text by string
+     * @param text
+     */
+    public void setRightText(String text){
+        mRightText.setText(text);
+    }
+
 
     /**
      * custom the view left
@@ -177,29 +225,109 @@ public class AppBar extends LinearLayout {
         return mRightRoot;
     }
 
-    /**
-     * set support action bar
-     * @param activity
-     */
-    public void setSupportActionBar(AppCompatActivity activity){
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
 
     /**
      * set back listener
      * @param listener
      */
-    public void setImageBackListener(OnClickListener listener){
-        mBackImage.setOnClickListener(listener);
+    public void setLeftListener(OnClickListener listener){
+        mLeftRoot.setOnClickListener(listener);
     }
 
     /**
      * set right listener
      * @param listener
      */
-    public void setImageRightListener(OnClickListener listener){
-        mRightImage.setOnClickListener(listener);
+    public void setRightListener(OnClickListener listener){
+        mRightRoot.setOnClickListener(listener);
     }
+
+
+    /**
+     *  set left text visible
+     * @param visible
+     */
+    public void setLeftTextVisible(boolean visible){
+        mLeftText.setVisibility(visible ? VISIBLE : GONE);
+
+    }
+
+
+    /**
+     *  set left image visible
+     * @param visible
+     */
+    public void setLeftImageVisible(boolean visible){
+        mLeftImage.setVisibility(visible ? VISIBLE : GONE);
+
+    }
+
+
+    /**
+     *  set Right text visible
+     * @param visible
+     */
+    public void setRightTextVisible(boolean visible){
+        mRightText.setVisibility(visible ? VISIBLE : GONE);
+
+    }
+
+
+    /**
+     *  set Right image visible
+     * @param visible
+     */
+    public void setRightImageVisible(boolean visible){
+        mRightImage.setVisibility(visible ? VISIBLE : GONE);
+
+    }
+
+
+    /**
+     * set statusbar color
+     * @param color
+     */
+    public void setStatusBarColor(int color){
+        mStatusBar.setBackgroundColor(color);
+    }
+
+
+    /**
+     * set appbar color
+     * @param color
+     */
+    public void setAppbarColor(int color){
+        appBar.setBackgroundColor(color);
+    }
+
+
+    /**
+     *  set parent bar color
+     * @param color
+     */
+    public void setTitleBarColor(int color){
+        titleBar.setBackgroundColor(color);
+    }
+
+
+    /**
+     * set statusbar visible
+     */
+    public void setStatusbarVisible(boolean visible){
+        mStatusBar.setVisibility(visible?VISIBLE:GONE);
+    }
+
+
+    /**
+     * 20以上配置通知栏
+     *
+     * @return
+     */
+    public static boolean isConfigStatusbar() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+
+
 
 }

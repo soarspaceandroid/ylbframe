@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -58,22 +57,14 @@ public abstract class BaseFragment extends Fragment implements RequestListener ,
         appBar = (AppBar)parentView.findViewById(R.id.app_bar);
         controlAppBar(appBar);
         setAppBarHeight();
-        appBar.setSupportActionBar((AppCompatActivity) getActivity());
-        StatusBarCompat.compat(getActivity());
 //        appBar.setBackImage(R.mipmap.back);
-        appBar.setImageBackListener(new View.OnClickListener() {
+        appBar.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
             }
         });
         appBar.setTitle(currentTitle());
-//        appBar.setRightImage(R.mipmap.menu);
-        appBar.setImageRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
 
@@ -170,22 +161,6 @@ public abstract class BaseFragment extends Fragment implements RequestListener ,
 
 
 
-    /**
-     * 控制back按钮的显示和隐藏  或是自定义左边的相关内容的隐藏
-     * @param enable
-     */
-    public void controlBack(boolean enable){
-        appBar.getLeftRoot().setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    /**
-     * 控制menu按钮的显示和隐藏  或是自定义右边的相关内容的隐藏
-     * @param enable
-     */
-    public void controlMenu(boolean enable){
-        appBar.getRightRoot().setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-    }
-
 
 
     public void setTitle(String title){
@@ -220,6 +195,64 @@ public abstract class BaseFragment extends Fragment implements RequestListener ,
      */
     public AppBar getAppBar(){
         return appBar;
+    }
+
+
+    /**
+     * display  left text
+     * @param text
+     */
+    public void showLeftText(String text){
+        appBar.setLeftText(text);
+    }
+
+    /**
+     * dislplay right text
+     * @param text
+     */
+    public void showRightText(String text){
+        appBar.setRightText(text);
+    }
+
+    /**
+     * display right image
+     * @param resId
+     */
+    public void showRightImage(int resId){
+        appBar.setRightImage(resId);
+    }
+
+    /**
+     * display left image
+     * @param resId
+     */
+    public void showLeftImage(int resId){
+        appBar.setLeftImage(resId);
+    }
+
+
+    /**
+     *  设置statusbar color
+     * @param statusbarColor
+     */
+    public void setStatusbarColor(int statusbarColor){
+        appBar.setStatusBarColor(statusbarColor);
+    }
+
+    /**
+     * 设置整个bar 颜色
+     * @param color
+     */
+    public void setAppBarColor(int color){
+        appBar.setAppbarColor(color);
+    }
+
+    /**
+     * 设置appbar中除了statusbar的部分
+     * @param color
+     */
+    public void setTitleBarColor(int color){
+        appBar.setTitleBarColor(color);
     }
 
 }

@@ -66,7 +66,7 @@ public abstract class BaseApplication extends Application{
      * 重写获取enity class
      * @return
      */
-    public abstract Class getEnityClass();
+    protected abstract Class getEnityClass();
 
     /**
      * 重写获取base url

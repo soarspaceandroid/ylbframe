@@ -1,7 +1,7 @@
 package com.example.administrator.ylbapplication;
 
 import com.android.ylblib.base.BaseApplication;
-import com.android.ylblib.interfaces.BaseApplicationHelper;
+import com.android.ylblib.interfaces.helpers.BaseApplicationHelper;
 import com.example.administrator.ylbapplication.net.RequestEntry;
 
 /**

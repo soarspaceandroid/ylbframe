@@ -1,12 +1,16 @@
 package com.android.ylblib.base.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.android.ylblib.R;
@@ -30,101 +34,21 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //状态栏 底部导航栏
+        if (AppBar.isConfigStatusbar()) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+                    .SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_root);
         initBaseView();
         initBaseData();
     }
 
-    /**set title*/
-    protected abstract String currActivityName();
-
-
-    /**
-     * 控制back按钮的显示和隐藏  或是自定义左边的相关内容的隐藏
-     * @param enable
-     */
-    public void controlBack(boolean enable){
-        appBar.getLeftRoot().setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    /**
-     * 控制menu按钮的显示和隐藏  或是自定义右边的相关内容的隐藏
-     * @param enable
-     */
-    public void controlMenu(boolean enable){
-        appBar.getRightRoot().setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    /**
-     * 请求数据
-     * @return
-     */
-    protected abstract void requestData(BasePresenter basePresenter);
-
-
-    private void initBaseData() {
-        presenter = new BasePresenter().setRquestEnity(BaseApplication.getInstanse().getRequestEnityClass()).setRequestListener(this);
-        dataCacheManager  = BaseApplication.getDataCacheManager();
-    }
-
-    private void initBaseView() {
-        content = (ErrorViewLayout) findViewById(R.id.root_container);
-        appBar = (AppBar)findViewById(R.id.app_bar);
-        controlAppBar(appBar);
-        setAppBarHeight();
-        appBar.setSupportActionBar(this);
-        StatusBarCompat.compat(this);
-//        appBar.setBackImage(R.mipmap.back);
-        appBar.setImageBackListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        appBar.setTitle(currActivityName());
-//        appBar.setRightImage(R.mipmap.menu);
-        appBar.setImageRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-    }
-
-
-    public void setTitle(String title){
-        appBar.setTitle(title);
-    }
-
-    /**
-     * set app bar height
-     */
-    private void setAppBarHeight(){
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 0;
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-        ViewGroup.LayoutParams params = appBar.getLayoutParams();
-        params.height  = StatusBarCompat.getStatusBarHeight(this) + actionBarHeight;
-        appBar.setLayoutParams(params);
-    }
-
-    /**
-     *  control appbar ,  如果需要修改appbar 请重写该方法
-     * @param appbar
-     */
-    public void controlAppBar(AppBar appbar){
-
-    }
-
-    /**
-     * get appbar
-     * @return
-     */
-    public AppBar getAppBar(){
-        return appBar;
-    }
 
 
     @Override
@@ -154,6 +78,42 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         content.addView(view, params);
     }
+
+
+    /**set title*/
+    protected abstract String currActivityName();
+
+
+
+    private void initBaseData() {
+        presenter = new BasePresenter().setRquestEnity(BaseApplication.getInstanse().getRequestEnityClass()).setRequestListener(this);
+        dataCacheManager  = BaseApplication.getDataCacheManager();
+    }
+
+
+
+
+    private void initBaseView() {
+        content = (ErrorViewLayout) findViewById(R.id.root_container);
+        appBar = (AppBar)findViewById(R.id.app_bar);
+        controlAppBar(appBar);
+        setAppBarHeight();
+        appBar.setLeftListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        appBar.setTitle(currActivityName());
+    }
+
+
+    /**
+     * 请求数据
+     * @return
+     */
+    protected abstract void requestData(BasePresenter basePresenter);
+
 
     @Override
     protected void onStart() {
@@ -231,5 +191,109 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
     public void errorHide() {
         content.displayError(false);
     }
+
+
+    public void setTitle(String title){
+        appBar.setTitle(title);
+    }
+
+    /**
+     * set app bar height
+     */
+    private void setAppBarHeight(){
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        ViewGroup.LayoutParams params = appBar.getLayoutParams();
+        params.height  = StatusBarCompat.getStatusBarHeight(this) + actionBarHeight;
+        appBar.setLayoutParams(params);
+    }
+
+    /**
+     *  control appbar ,  如果需要修改appbar 请重写该方法
+     * @param appbar
+     */
+    public void controlAppBar(AppBar appbar){
+        if (AppBar.isConfigStatusbar()) {
+            //statusbar height
+            appBar.setStatusbarVisible(true);
+            appBar.setStatusBarColor(getResources().getColor(R.color.status_bar_color));
+        } else {
+            appBar.setStatusbarVisible(false);
+        }
+    }
+
+    /**
+     * get appbar
+     * @return
+     */
+    public AppBar getAppBar(){
+        return appBar;
+    }
+
+
+
+
+
+    /**
+     * display  left text
+     * @param text
+     */
+    public void showLeftText(String text){
+        appBar.setLeftText(text);
+    }
+
+    /**
+     * dislplay right text
+     * @param text
+     */
+    public void showRightText(String text){
+        appBar.setRightText(text);
+    }
+
+    /**
+     * display right image
+     * @param resId
+     */
+    public void showRightImage(int resId){
+        appBar.setRightImage(resId);
+    }
+
+    /**
+     * display left image
+     * @param resId
+     */
+    public void showLeftImage(int resId){
+        appBar.setLeftImage(resId);
+    }
+
+
+    /**
+     *  设置statusbar color
+     * @param statusbarColor
+     */
+    public void setStatusbarColor(int statusbarColor){
+        appBar.setStatusBarColor(statusbarColor);
+    }
+
+    /**
+     * 设置整个bar 颜色
+     * @param color
+     */
+    public void setAppBarColor(int color){
+        appBar.setAppbarColor(color);
+    }
+
+    /**
+     * 设置appbar中除了statusbar的部分
+     * @param color
+     */
+    public void setTitleBarColor(int color){
+        appBar.setTitleBarColor(color);
+    }
+
+
 
 }

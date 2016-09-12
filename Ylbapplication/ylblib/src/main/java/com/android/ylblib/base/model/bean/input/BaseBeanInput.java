@@ -63,7 +63,8 @@ public abstract class BaseBeanInput<T>{
      * 设置是否显示dialog
      * @param showDialog
      */
-    public void setShowDialog(boolean showDialog) {
+    public BaseBeanInput setShowDialog(boolean showDialog) {
         this.showDialog = showDialog;
+        return this;
     }
 }

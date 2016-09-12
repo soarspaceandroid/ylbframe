@@ -3,4 +3,9 @@
 
     <item name="tag_adapter_helper" type="id"></item>
 
+    <item type="id" name="gridview" />
+    <item type="id" name="webview" />
+    <item type="id" name="scrollview" />
+
+
 </resources>

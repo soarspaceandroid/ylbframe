@@ -17,7 +17,7 @@ public interface RequestEntry {
      * 获取picinfo
      * @return
      */
-    @POST("/tnfs/api/list")
+    @POST(RequestApi.PIC_API)
     public Observable<PicInfoOutput> getPicInfo(@Body FormBody formBody);
 
 }

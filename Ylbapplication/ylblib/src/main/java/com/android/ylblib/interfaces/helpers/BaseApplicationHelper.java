@@ -1,4 +1,4 @@
-package com.android.ylblib.interfaces;
+package com.android.ylblib.interfaces.helpers;
 
 /**
  * Created by gaofei on 2016/9/12.
