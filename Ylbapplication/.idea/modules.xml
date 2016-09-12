@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ylbapplication.iml" filepath="$PROJECT_DIR$/Ylbapplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ylbapplication.iml" filepath="$PROJECT_DIR$/Ylbapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ylblib/ylblib.iml" filepath="$PROJECT_DIR$/ylblib/ylblib.iml" />
       <module fileurl="file://$PROJECT_DIR$/ylblib/ylblib.iml" filepath="$PROJECT_DIR$/ylblib/ylblib.iml" />
     </modules>
   </component>

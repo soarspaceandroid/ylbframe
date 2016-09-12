@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
 import com.android.ylblib.base.presenter.BasePresenter;
 import com.android.ylblib.base.views.BaseActivity;
 import com.example.administrator.ylbapplication.R;
 import com.example.administrator.ylbapplication.model.input.PicInfoInput;
 import com.example.administrator.ylbapplication.model.output.PicInfoOutput;
 
-public class MainActivity extends BaseActivity implements BaseViewInterface{
+public class MainActivity extends BaseActivity{
     TextView test;
 
 

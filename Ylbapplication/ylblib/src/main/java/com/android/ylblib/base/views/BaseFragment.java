@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 
 import com.android.ylblib.R;
 import com.android.ylblib.base.BaseApplication;
+import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
 import com.android.ylblib.base.presenter.BasePresenter;
 import com.android.ylblib.net.RequestListener;
 import com.android.ylblib.tools.StatusBarCompat;
@@ -21,7 +22,7 @@ import com.android.ylblib.views.AppBar;
 import com.android.ylblib.views.ErrorViewLayout;
 
 
-public abstract class BaseFragment extends Fragment implements RequestListener {
+public abstract class BaseFragment extends Fragment implements RequestListener , BaseViewInterface {
 
     private BasePresenter presenter;
     private View parentView;

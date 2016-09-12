@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.android.ylblib.R;
 import com.android.ylblib.base.BaseApplication;
+import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
 import com.android.ylblib.base.presenter.BasePresenter;
 import com.android.ylblib.net.RequestListener;
 import com.android.ylblib.tools.StatusBarCompat;
@@ -19,7 +20,7 @@ import com.android.ylblib.views.AppBar;
 import com.android.ylblib.views.ErrorViewLayout;
 
 
-public abstract class BaseActivity extends AppCompatActivity implements RequestListener {
+public abstract class BaseActivity extends AppCompatActivity implements RequestListener , BaseViewInterface{
 
 
     private ErrorViewLayout content;
