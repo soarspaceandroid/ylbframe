@@ -1,6 +1,7 @@
 package com.example.administrator.ylbapplication;
 
 import com.android.ylblib.interfaces.helpers.BaseApplicationHelper;
+import com.android.ylblib.tools.database.DataManager;
 import com.example.administrator.ylbapplication.net.Config;
 import com.example.administrator.ylbapplication.net.RequestEntry;
 
@@ -19,4 +20,5 @@ public class ApplicationHelper implements BaseApplicationHelper{
     public Class getEnityClass() {
         return RequestEntry.class;
     }
+
 }

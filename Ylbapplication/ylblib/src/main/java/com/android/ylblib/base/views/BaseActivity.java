@@ -19,7 +19,7 @@ import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
 import com.android.ylblib.base.presenter.BasePresenter;
 import com.android.ylblib.net.RequestListener;
 import com.android.ylblib.tools.StatusBarCompat;
-import com.android.ylblib.tools.database.DataCacheManager;
+import com.android.ylblib.tools.database.DataManager;
 import com.android.ylblib.views.AppBar;
 import com.android.ylblib.views.ErrorViewLayout;
 
@@ -28,12 +28,13 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
 
 
     private ErrorViewLayout content;
-    public DataCacheManager dataCacheManager;
+    public DataManager dataManager;
     private AppBar appBar;
     private BasePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         //状态栏 底部导航栏
         if (AppBar.isConfigStatusbar()) {
             Window window = getWindow();
@@ -87,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
 
     private void initBaseData() {
         presenter = new BasePresenter().setRquestEnity(BaseApplication.getInstanse().getRequestEnityClass()).setRequestListener(this);
-        dataCacheManager  = BaseApplication.getDataCacheManager();
+        dataManager  = BaseApplication.getDataManager();
     }
 
 
@@ -96,15 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
     private void initBaseView() {
         content = (ErrorViewLayout) findViewById(R.id.root_container);
         appBar = (AppBar)findViewById(R.id.app_bar);
-        controlAppBar(appBar);
-        setAppBarHeight();
-        appBar.setLeftListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        appBar.setTitle(currActivityName());
+        controlAppBar();
     }
 
 
@@ -139,10 +132,6 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
 
 
 
-    /**
-     * dialog tag
-     */
-    private static String mDialogTag = "dialog";
 
     /**
      * 描述：显示加载框.
@@ -213,9 +202,9 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
 
     /**
      *  control appbar ,  如果需要修改appbar 请重写该方法
-     * @param appbar
      */
-    public void controlAppBar(AppBar appbar){
+    public void controlAppBar(){
+        setAppBarHeight();
         if (AppBar.isConfigStatusbar()) {
             //statusbar height
             appBar.setStatusbarVisible(true);
@@ -223,9 +212,17 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
         } else {
             appBar.setStatusbarVisible(false);
         }
+        appBar.setAppbarColor(getResources().getColor(R.color.action_bar_color));
+        appBar.getLeftImage().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        appBar.setTitle(currActivityName());
     }
 
-    /**
+     /**
      * get appbar
      * @return
      */
@@ -295,5 +292,20 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
     }
 
 
+    @Override
+    public void onBackPressed() {
+        String[] keys = getNeedCancelRequest();
+        Log.e("soar" , "tst onback  "+keys[0]);
+        presenter.cancel(keys);
+        super.onBackPressed();
+    }
 
+
+    /**
+     * 返回键点击取消请求请重写此方法
+     * @return
+     */
+    public  String[] getNeedCancelRequest(){
+        return null;
+    };
 }

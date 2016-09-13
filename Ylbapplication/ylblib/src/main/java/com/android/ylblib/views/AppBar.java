@@ -180,7 +180,8 @@ public class AppBar extends LinearLayout {
      * @param visible
      */
     public void setLeftVisible(boolean visible){
-        mLeftRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mLeftImage.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mLeftText.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -188,7 +189,7 @@ public class AppBar extends LinearLayout {
      * @param visible
      */
     public void setMiddleVisible(boolean visible){
-        mMiddleRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mTitleView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
 
@@ -197,7 +198,8 @@ public class AppBar extends LinearLayout {
      * @param visible
      */
     public void setRightVisible(boolean visible){
-        mRightRoot.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mRightImage.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mRightText.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -316,6 +318,41 @@ public class AppBar extends LinearLayout {
     public void setStatusbarVisible(boolean visible){
         mStatusBar.setVisibility(visible?VISIBLE:GONE);
     }
+
+
+    /**
+     * get left image
+     * @return
+     */
+    public ImageView getLeftImage(){
+        return mLeftImage;
+    }
+
+
+    /**
+     * get right image
+     * @return
+     */
+    public ImageView getRightImage(){
+        return mRightImage;
+    }
+
+    /**
+     * get left text
+     * @return
+     */
+    public TextView getLeftText(){
+        return mLeftText;
+    }
+
+    /**
+     * get right text
+     * @return
+     */
+    public TextView getRightText(){
+        return mRightText;
+    }
+
 
 
     /**

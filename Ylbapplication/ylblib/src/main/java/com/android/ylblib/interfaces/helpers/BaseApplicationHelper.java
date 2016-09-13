@@ -17,4 +17,5 @@ public interface BaseApplicationHelper {
      */
     public Class getEnityClass();
 
+
 }

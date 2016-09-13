@@ -4,16 +4,16 @@ import android.app.Application;
 import android.content.Context;
 
 import com.android.ylblib.net.NetConfig;
-import com.android.ylblib.tools.database.DataCacheManager;
+import com.android.ylblib.tools.database.DataManager;
 
 
 /**
  * Created by gaofei on 2016/4/26.
  */
 public abstract class BaseApplication extends Application{
-    private static DataCacheManager dataCacheManager;
     private static Context mContext;
     private static BaseApplication instanse;
+    private static DataManager dataManager;
 
 
     @Override
@@ -22,17 +22,19 @@ public abstract class BaseApplication extends Application{
         instanse = this;
         NetConfig.CACHAE_DIR=getCacheDir();
         mContext = getApplicationContext();
+        getDataManager().openDB(this);
     }
 
     /**
      * get data cache manager
      * @return
      */
-    public static DataCacheManager getDataCacheManager(){
-        if(dataCacheManager == null){
-            dataCacheManager = new DataCacheManager(mContext);
+
+    public static synchronized DataManager getDataManager(){
+        if(dataManager == null){
+            dataManager = new DataManager();
         }
-        return dataCacheManager;
+        return dataManager;
     }
 
     /**

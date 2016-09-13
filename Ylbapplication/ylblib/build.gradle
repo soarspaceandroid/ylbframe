@@ -37,8 +37,7 @@ dependencies {
     //图片显示
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     //数据存储
-    compile 'com.snappydb:snappydb-lib:0.5.2'
-    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+    compile 'io.supercharge:rxsnappy:0.4.0'
     //id 注解
     compile 'com.jakewharton:butterknife:7.0.1'
     compile files('libs/org.apache.http.legacy.jar')

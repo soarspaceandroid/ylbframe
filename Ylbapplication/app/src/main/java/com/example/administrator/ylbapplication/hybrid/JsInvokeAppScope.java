@@ -67,7 +67,8 @@ public class JsInvokeAppScope implements BaseViewInterface , RequestListener {
         BasePresenterHelper
                 .getInstance(this , this , BaseApplication.getInstanse().getRequestEnityClass())
                 .setInput(new PicInfoInput(1).setShowDialog(false))
-                .load();
+                .setOutputClass(PicInfoOutput.class)
+                .load(false);
         String page = "";
         try {
             page = data.getString("p");
