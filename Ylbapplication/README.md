@@ -20,10 +20,10 @@
             compile 'com.jakewharton:butterknife:7.0.1'
 
 
-2.请求使用Okhttp3 的 client , Retrofit 组合请求 结合 Gson进行解析 ,
-3.请求采用 拦截器方式进行修改 请求header 和 请求体参数
-4.图片的异步加载使用okhttp组合的picasso
-5.数据存储使用SnappyDB  NOSQL方式
-6.异步处理事件采用Rxjava  Rxandroid
-7.继续沿用永利宝的Hybrid模式
+2.请求使用Okhttp3 的 client , Retrofit 组合请求 结合 Gson进行解析 ,<br />
+3.请求采用 拦截器方式进行修改 请求header 和 请求体参数<br />
+4.图片的异步加载使用okhttp组合的picasso<br />
+5.数据存储使用SnappyDB  NOSQL方式<br />
+6.异步处理事件采用Rxjava  Rxandroid<br />
+7.继续沿用永利宝的Hybrid模式<br />
 
