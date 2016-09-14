@@ -4,7 +4,6 @@ package com.android.ylblib.base.presenter;
 import android.util.Log;
 
 import com.android.ylblib.base.BaseApplication;
-import com.android.ylblib.base.RxCenter;
 import com.android.ylblib.base.model.bean.input.BaseBeanInput;
 import com.android.ylblib.base.model.bean.output.BaseBeanOutput;
 import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
@@ -118,7 +117,7 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
                     }
                     @Override
                     public void onNext(T t) {
-                        Log.e("soar" , "on next");
+                        Log.e("soar" , "on next  " + (new Gson().toJson(t)));
                         baseViewInterface.updateView(t);
                         //此处存储的数据全部置为true 然后存储
                         t.setCache(true);

@@ -36,13 +36,13 @@ public class MainActivity extends BaseActivity{
         Log.e("soar" , "---------- "+(new Gson().toJson(o)));
       if(o instanceof PicInfoOutput){
           test.setText("请求成功----- "+((PicInfoOutput) o).tngou.size());
-          Log.e("soar","get 0---- "+dataManager.getObject(PicInfoOutput.class).tngou.get(5).title);
+//          Log.e("soar","get 0---- "+dataManager.getObject(PicInfoOutput.class).tngou.get(5).title);
       }
     }
 
     @Override
     public void showError(String msg) {
-        Log.e("soar" , "test error --- "+msg);
+        Log.e("soar" , "test error --- "+msg , new Throwable());
     }
 
 
