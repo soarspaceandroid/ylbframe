@@ -21,10 +21,9 @@ public class WebActivity extends BaseActivity implements PullToRefreshBase.OnRef
     private WebView mWebView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    protected void onCreateActivity(Bundle savedInstanceState) {
 
+    }
 
     @Override
     public void onResume() {

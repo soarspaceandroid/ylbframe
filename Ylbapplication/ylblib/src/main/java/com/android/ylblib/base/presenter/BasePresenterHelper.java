@@ -41,7 +41,6 @@ public class BasePresenterHelper{
      * @param subscription
      */
     public static  void addRequest(String key ,Subscription subscription){
-        Log.e("soar" , "add ---- "+key);
         allRequest.put(key , subscription);
     }
 
@@ -62,7 +61,6 @@ public class BasePresenterHelper{
      */
     public static void cancelRequest(String... key){
         for (int x = 0 ; x < key.length ; x++) {
-            Log.e("soar" , "cacel --- "+key[0]);
             if (allRequest.containsKey(key)) {
                 allRequest.get(key).unsubscribe();
                 allRequest.remove(key);

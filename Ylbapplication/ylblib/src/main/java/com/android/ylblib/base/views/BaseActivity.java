@@ -48,8 +48,11 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
         super.setContentView(R.layout.activity_root);
         initBaseView();
         initBaseData();
+        onCreateActivity(savedInstanceState);
+        requestData(presenter);
     }
 
+    protected abstract void onCreateActivity(Bundle savedInstanceState);
 
 
     @Override
@@ -106,30 +109,6 @@ public abstract class BaseActivity extends AppCompatActivity implements RequestL
      * @return
      */
     protected abstract void requestData(BasePresenter basePresenter);
-
-
-    @Override
-    protected void onStart() {
-        requestData(presenter);
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
 
 
 

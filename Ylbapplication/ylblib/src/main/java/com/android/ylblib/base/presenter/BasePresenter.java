@@ -7,6 +7,8 @@ import com.android.ylblib.base.model.bean.output.BaseBeanOutput;
 import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
 import com.android.ylblib.net.RequestListener;
 import com.android.ylblib.net.RetrofitFactory;
+import com.android.ylblib.tools.Logs;
+import com.google.gson.Gson;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -89,13 +91,9 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
      *  request
      */
     public void load(boolean fromCache) {
-        if (input.isShowDialog()&&this.requestListener!=null) {
-            this.requestListener.showProgressDialog();
-        }
+        showDialog();
         requestListener.errorHide();
-//        if(fromCache) {
-//            getDataFromLocal();
-//        }
+        getDataFromLocal(fromCache);
         Observable<T> observable = input.getData(enity)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
@@ -103,27 +101,22 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
                     @Override
                     public void onCompleted() {
                         BasePresenterHelper.removeRequest(input.getClass().getSimpleName());
-                        if (input.isShowDialog()&&requestListener!=null) {
-                            requestListener.hideProgressDialog();
-                        }
+                        hideDialog();
                     }
                     @Override
                     public void onError(Throwable e) {
                         BasePresenterHelper.removeRequest(input.getClass().getSimpleName());
-                        if (input.isShowDialog()&&requestListener!=null) {
-                            requestListener.hideProgressDialog();
-                        }
                         baseViewInterface.showError(e.getLocalizedMessage());
                         requestListener.errorDisplay(e.getLocalizedMessage());
+                        hideDialog();
                     }
                     @Override
                     public void onNext(T t) {
                         baseViewInterface.updateView(t);
+                        //此处存储的数据全部置为true 然后存储
+                        t.setCache(true);
+                        Logs.d("cache" ,"cache ---- "+( new Gson().toJson(t)));
                         BaseApplication.getDataManager().insertObject(t);
-                        BasePresenterHelper.removeRequest(input.getClass().getSimpleName());
-                        if (input.isShowDialog()&&requestListener!=null) {
-                            requestListener.hideProgressDialog();
-                        }
                     }
                 });
 
@@ -145,8 +138,35 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
     /**
      * get data from local
      */
-    private void getDataFromLocal(){
-        baseViewInterface.updateView(BaseApplication.getDataManager().getObject(outputClass));
+    private void getDataFromLocal(boolean fromCache){
+        if(fromCache) {
+            Object object = BaseApplication.getDataManager().getObject(outputClass);
+            if(object == null){
+                return ;
+            }
+            Logs.d("cache" , new Gson().toJson(object));
+            baseViewInterface.updateView(object);
+        }
+    }
+
+
+    /**
+     * show dialog
+     */
+    private void showDialog(){
+        if (input.isShowDialog()&&this.requestListener!=null) {
+            this.requestListener.showProgressDialog();
+        }
+    }
+
+
+    /**
+     *   hide dialog
+     */
+    private void hideDialog(){
+        if (input.isShowDialog()&&requestListener!=null) {
+            requestListener.hideProgressDialog();
+        }
     }
 
 }

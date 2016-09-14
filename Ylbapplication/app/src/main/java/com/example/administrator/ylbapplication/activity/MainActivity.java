@@ -15,8 +15,7 @@ public class MainActivity extends BaseActivity{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         test = (TextView)findViewById(R.id.test);
     }

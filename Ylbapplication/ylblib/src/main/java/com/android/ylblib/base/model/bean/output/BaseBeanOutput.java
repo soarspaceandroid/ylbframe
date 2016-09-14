@@ -5,5 +5,13 @@ package com.android.ylblib.base.model.bean.output;
  */
 public class BaseBeanOutput {
 
+    public boolean isCache ;
 
+    public boolean isCache() {
+        return isCache;
+    }
+
+    public void setCache(boolean cache) {
+        isCache = cache;
+    }
 }
