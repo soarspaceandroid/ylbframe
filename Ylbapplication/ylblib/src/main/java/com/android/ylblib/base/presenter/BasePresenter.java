@@ -4,6 +4,7 @@ package com.android.ylblib.base.presenter;
 import android.util.Log;
 
 import com.android.ylblib.base.BaseApplication;
+import com.android.ylblib.base.RxCenter;
 import com.android.ylblib.base.model.bean.input.BaseBeanInput;
 import com.android.ylblib.base.model.bean.output.BaseBeanOutput;
 import com.android.ylblib.base.model.viewinterface.BaseViewInterface;
@@ -96,6 +97,7 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
         showDialog();
         requestListener.errorHide();
         getDataFromLocal(fromCache);
+
         Observable<T> observable = input.getData(enity)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
@@ -124,8 +126,9 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
                     }
                 });
 
-       BasePresenterHelper.addRequest(input.getClass().getSimpleName() , subscription);
+//       BasePresenterHelper.addRequest(input.getClass().getSimpleName() , subscription);
 
+        RxCenter.INSTANCE.getCompositeSubscription(input.getClass().getSimpleName().hashCode()).add(subscription);
 
     }
 
@@ -135,7 +138,10 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
      * @param key
      */
     public void cancel(String... key){
-        BasePresenterHelper.cancelRequest(key);
+//        BasePresenterHelper.cancelRequest(key);
+        for(String k : key) {
+            RxCenter.INSTANCE.removeCompositeSubscription(k.hashCode());
+        }
     }
 
 
