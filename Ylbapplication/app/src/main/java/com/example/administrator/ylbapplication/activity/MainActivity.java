@@ -9,6 +9,7 @@ import com.android.ylblib.base.views.BaseActivity;
 import com.example.administrator.ylbapplication.R;
 import com.example.administrator.ylbapplication.model.input.PicInfoInput;
 import com.example.administrator.ylbapplication.model.output.PicInfoOutput;
+import com.google.gson.Gson;
 
 public class MainActivity extends BaseActivity{
     TextView test;
@@ -32,9 +33,9 @@ public class MainActivity extends BaseActivity{
 
     @Override
     public void updateView(Object o) {
+        Log.e("soar" , "---------- "+(new Gson().toJson(o)));
       if(o instanceof PicInfoOutput){
-          test.setText("请求成功----- "+((PicInfoOutput) o).tngou.get(1).title);
-          dataManager.insertObject((PicInfoOutput)o);
+          test.setText("请求成功----- "+((PicInfoOutput) o).tngou.size());
           Log.e("soar","get 0---- "+dataManager.getObject(PicInfoOutput.class).tngou.get(5).title);
       }
     }

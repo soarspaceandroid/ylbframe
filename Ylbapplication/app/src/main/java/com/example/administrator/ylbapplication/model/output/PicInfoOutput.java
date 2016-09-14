@@ -3,6 +3,7 @@ package com.example.administrator.ylbapplication.model.output;
 
 import com.android.ylblib.base.model.bean.output.BaseBeanOutput;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class PicInfoOutput extends BaseBeanOutput {
 
     public boolean status;
     public int total;
-    public List<TngouEntity> tngou;
+    public List<TngouEntity> tngou = new ArrayList<>();
 
     public static class TngouEntity {
         public int id;

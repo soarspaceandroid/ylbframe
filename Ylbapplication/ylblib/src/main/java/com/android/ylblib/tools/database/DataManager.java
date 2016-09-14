@@ -44,6 +44,9 @@ public class DataManager  {
      * @return
      */
     public <T> T getObject(Class<T> tClass){
+        if(!client.exists(tClass.getSimpleName()).toBlocking().first()){
+           return null;
+        }
         return client.getObject(tClass.getSimpleName() , tClass).toBlocking().first();
     }
 

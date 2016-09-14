@@ -1,6 +1,8 @@
 package com.android.ylblib.base.presenter;
 
 
+import android.util.Log;
+
 import com.android.ylblib.base.BaseApplication;
 import com.android.ylblib.base.model.bean.input.BaseBeanInput;
 import com.android.ylblib.base.model.bean.output.BaseBeanOutput;
@@ -102,9 +104,11 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
                     public void onCompleted() {
                         BasePresenterHelper.removeRequest(input.getClass().getSimpleName());
                         hideDialog();
+                        Log.e("soar" , "oncomple");
                     }
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         BasePresenterHelper.removeRequest(input.getClass().getSimpleName());
                         baseViewInterface.showError(e.getLocalizedMessage());
                         requestListener.errorDisplay(e.getLocalizedMessage());
@@ -112,10 +116,10 @@ public class BasePresenter<T extends BaseBeanOutput, S> {
                     }
                     @Override
                     public void onNext(T t) {
+                        Log.e("soar" , "on next");
                         baseViewInterface.updateView(t);
                         //此处存储的数据全部置为true 然后存储
                         t.setCache(true);
-                        Logs.d("cache" ,"cache ---- "+( new Gson().toJson(t)));
                         BaseApplication.getDataManager().insertObject(t);
                     }
                 });
